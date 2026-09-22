@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LinguaPath — a calmer way to build exam-ready English habits." />
+  <title>LinguaPath · Your daily English practice</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2336bd82'/%3E%3Cpath d='M18 18h9v21c0 5 3 7 8 7 6 0 9-3 9-8V18h9v21c0 10-7 16-18 16S18 49 18 39V18Z' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><a class="brand" href="#today"><span class="brand-mark">L</span><span>linguapath</span></a><div class="header-actions"><span class="streak">🔥 7 day streak</span><button class="icon-button" id="theme-toggle" aria-label="Toggle dark mode">☾</button><button class="avatar-button">ES</button></div></header>
+    <main>
+      <section class="view active" id="today">
+        <div class="section-heading"><div><p class="eyebrow">Tuesday, September 22</p><h1>Ready to level up?</h1><p class="muted">Your Cambridge Linguaskill journey continues.</p></div><button class="primary" data-action="practice">Continue lesson <span>→</span></button></div>
+        <div class="momentum"><div><p class="eyebrow">Daily momentum</p><h2>Keep your 7/30 day streak alive.</h2><p class="accent-text">2/3 exercises answered today</p></div><div class="progress-ring"><strong>68%</strong><span>to next tier</span></div></div>
+        <div class="progress-track"><span style="width:68%"></span></div>
+        <div class="section-title"><h2>Practice by skill</h2><button class="text-button" data-nav="skills">View all →</button></div>
+        <div class="skill-grid">
+          <button class="skill-card listening" data-skill="Listening"><span class="skill-icon">◉</span><strong>Listening</strong><small>Sharpen your ear</small><span class="card-arrow">↗</span></button>
+          <button class="skill-card reading" data-skill="Reading"><span class="skill-icon">▤</span><strong>Reading</strong><small>Find the evidence</small><span class="card-arrow">↗</span></button>
+          <button class="skill-card writing" data-skill="Writing"><span class="skill-icon">✎</span><strong>Writing</strong><small>Make ideas clear</small><span class="card-arrow">↗</span></button>
+          <button class="skill-card speaking" data-skill="Speaking"><span class="skill-icon">◌</span><strong>Speaking</strong><small>Find your voice</small><span class="card-arrow">↗</span></button>
+        </div>
+        <div class="lower-grid"><div class="quote-card"><span class="quote-mark">“</span><p>Consistency beats intensity. A small session today keeps the path open tomorrow.</p><span class="muted">— Your future fluent self</span></div><div class="mini-card"><div class="mini-icon">✦</div><div><strong>3 min warm-up</strong><p class="muted">Quick practice for busy days.</p></div><button class="round-arrow" data-action="warmup">→</button></div></div>
+      </section>
+      <section class="view" id="journey"><div class="section-heading"><div><p class="eyebrow">Progress map</p><h1>Your journey</h1><p class="muted">Follow the path, collect tips, and build exam confidence.</p></div></div><div class="tier-card"><div><p class="eyebrow">Tier 1 · Foundations</p><h2>68 correct answers</h2><p class="muted">32 correct answers to the next tier</p></div><div class="tier-badge">B1</div></div><div class="journey-list" id="journey-list"></div></section>
+      <section class="view" id="skills"><div class="section-heading"><div><p class="eyebrow">Practice room</p><h1>Build your skills</h1><p class="muted">Choose a focus and make today count.</p></div></div><div class="skill-grid skill-grid-large"></div><div class="achievement-head"><div><h2>Achievements</h2><p class="muted">Small wins become exam confidence.</p></div><span class="pill">4 of 12 unlocked</span></div><div class="achievement-grid"></div></section>
+      <section class="view" id="profile"><div class="section-heading"><div><p class="eyebrow">Your space</p><h1>Your profile</h1><p class="muted">Progress that feels good to look at.</p></div><button class="secondary" data-action="edit">Edit profile</button></div><div class="profile-card"><div class="profile-avatar">ES</div><div><h2>Esteban</h2><p>Cambridge Linguaskill learner</p></div><div class="profile-stat"><span>🔥</span><strong>7 days</strong><small>current streak</small></div><div class="profile-stat"><span>🎯</span><strong>B2 goal</strong><small>learning target</small></div></div><div class="settings-card"><div><strong>Dark mode</strong><p class="muted">Use a darker color palette</p></div><button class="switch" id="theme-switch" aria-label="Toggle dark mode"><span></span></button></div><div class="mistakes"><h2>Keep going</h2><p class="muted">Complete a lesson to build your review history.</p></div></section>
+    </main>
+    <nav class="bottom-nav" aria-label="Main navigation"><button class="nav-item active" data-nav="today"><span>⌂</span>Today</button><button class="nav-item" data-nav="journey"><span>⌁</span>Journey</button><button class="nav-item" data-nav="skills"><span>✦</span>Skills</button><button class="nav-item" data-nav="profile"><span>○</span>Profile</button></nav>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
