@@ -7,7 +7,7 @@
   <title>LinguaPath · Your daily English practice</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2336bd82'/%3E%3Cpath d='M18 18h9v21c0 5 3 7 8 7 6 0 9-3 9-8V18h9v21c0 10-7 16-18 16S18 49 18 39V18Z' fill='white'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="style.css?v=20260922-13" />
-  <link rel="stylesheet" href="skill-progress.css?v=20260922-1" />
+  <link rel="stylesheet" href="liquid-navigation.css?v=20260922-1" />
 </head>
 <body>
   <section class="auth-screen" id="auth-screen"><div class="auth-card"><div class="brand"><span class="brand-mark">L</span><span>linguapath</span></div><p class="eyebrow">Your learning space</p><h1 id="auth-title">Create your account</h1><p class="muted" id="auth-subtitle">Save your practice and pick up where you left off.</p><form id="auth-form"><label>Email<input id="auth-username" type="email" autocomplete="email" required /></label><label>Password<input id="auth-password" type="password" autocomplete="new-password" required minlength="6" /></label><button class="primary full" id="auth-submit">Create account</button></form><p class="auth-error" id="auth-error"></p><button class="text-button auth-toggle" id="auth-toggle" type="button">Already have an account? Log in</button></div></section>
@@ -37,8 +37,7 @@
   <div class="practice-modal" id="practice-modal" aria-hidden="true"><div class="practice-dialog"><div class="practice-top"><button class="icon-button" id="close-practice">←</button><div><p class="eyebrow" id="practice-skill">Listening</p><strong id="practice-count">Exercise 1 of 100</strong></div><span class="practice-score" id="practice-score">0 correct</span></div><div class="level-row"><span>Choose your level</span><div id="level-buttons"></div></div><div class="lesson-progress"><span id="lesson-progress-bar"></span></div><p class="practice-meta" id="practice-lesson">Lesson 1 of 50 · works offline</p><div class="question-card"><p class="eyebrow">Practice question</p><button class="secondary audio-button" id="play-audio" type="button">▶ Play audio</button><button class="text-button transcript-button" id="toggle-transcript" type="button">Show transcript</button><h2 id="question-text"></h2><div id="answer-options"></div></div><p class="answer-result" id="answer-result"></p><button class="primary full" id="check-answer" disabled>Check answer</button><p class="practice-note">100 correct answers unlock the next tier. Missed questions are saved to your review history.</p></div></div>
   <div class="edit-modal" id="edit-modal" aria-hidden="true"><div class="edit-dialog"><div class="practice-top"><div><p class="eyebrow">Your profile</p><h2>Customize your space</h2></div><button class="icon-button" id="close-edit">×</button></div><label>Name<input id="profile-name" /></label><label>Learning goal<input id="profile-goal" /></label><label>Avatar<input id="profile-emoji" maxlength="2" /></label><label>Daily lessons<input id="profile-target" type="number" min="1" max="10" /></label><button class="primary full" id="save-profile">Save profile</button></div></div>
   <div class="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=20260922-18"></script>
-  <script src="skill-progress.js?v=20260922-2"></script>
+  <script src="script.js?v=20260922-19"></script>
   <script src="supabase-auth.js?v=20260922-7"></script>
 </body>
 </html>
