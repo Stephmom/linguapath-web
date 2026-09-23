@@ -1,6 +1,6 @@
 const achievementGoals=[
   {kind:'exercise',target:1},{kind:'exercise',target:10},{kind:'exercise',target:25},{kind:'exercise',target:50},
-  {kind:'exercise',target:100},{kind:'exercise',target:250},{kind:'lesson',target:10},{kind:'lesson',target:20}
+  {kind:'exercise',target:100},{kind:'exercise',target:250},{kind:'exercise',target:350},{kind:'exercise',target:1200}
 ];
 function renderAchievements(){
   const legacyTotal=(Number(st.correct)||0)+(Array.isArray(st.mistakes)?st.mistakes.length:0);
