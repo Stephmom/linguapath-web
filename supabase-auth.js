@@ -27,7 +27,7 @@ async function loadCloudUser(user){
   if(!response.ok){document.querySelector('#auth-error').textContent='Could not load saved progress. Check your connection and try again; your account data was not changed.';return}
   const rows=await response.json();
   window.__lpCloudUser=user;
-  if(rows[0]?.state){st={...D,...rows[0].state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0);if(st.dayKey!==todayKey()){st.today=0;st.dayKey=todayKey()}}else st={...D,dayKey:todayKey(),profile:{...D.profile,name:user.email?.split('@')[0]||'Learner'}};
+  if(rows[0]?.state){st={...D,...rows[0].state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0);if(st.dayKey!==todayKey()){st.today=0;st.dayKey=todayKey()}}else st={...D,dayKey:todayKey(),profile:{...D.profile,name:user.email?.split('@')[0]||'Learner'}};if(st.streak&&!st.lastStreakAt)st.lastStreakAt=Date.now();
   session=user.id;localStorage.setItem(SESSION_KEY,session);authScreen.classList.add('hidden');document.body.classList.add('authenticated');render();window.lpResumePractice?.();
 }
 
