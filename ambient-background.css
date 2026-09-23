@@ -1,0 +1,5 @@
+body{position:relative;isolation:isolate;--pointer-x:50vw;--pointer-y:35vh}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:radial-gradient(420px circle at var(--pointer-x) var(--pointer-y),#36bd821c,transparent 74%);transition:opacity .3s ease}
+body.pointer-active:before{opacity:1}
+body.dark:before{background:radial-gradient(420px circle at var(--pointer-x) var(--pointer-y),#47c99820,transparent 74%)}
+@media(prefers-reduced-motion:reduce){body:before{display:none}}
