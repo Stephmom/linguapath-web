@@ -1,0 +1,51 @@
+# LinguaPath
+
+LinguaPath is a lightweight English-practice website for Cambridge Linguaskill learners. It runs as a static site—there is no build step or package manager.
+
+**Live site:** https://stephmom.github.io/linguapath-web/
+
+## Features
+
+- Listening, Reading, Writing, and Speaking practice
+- Tier progression based on correct answers
+- Daily practice goal, streaks, review history, and achievements
+- Daily motivational quotes and a randomized three-minute warm-up
+- Light and dark themes, with a mouse-reactive particle background
+- Email sign-in and cloud-synced student progress using Supabase
+
+## Run locally
+
+From the repository root, start a small local web server:
+
+```sh
+python3 -m http.server 8000
+```
+
+Then open http://localhost:8000. A local server is recommended because the app loads its question and quote data from JSON files.
+
+## Supabase setup
+
+The site uses Supabase Auth and the `student_progress` table to keep each signed-in learner’s progress separate and available across devices.
+
+1. Create a Supabase project.
+2. In the Supabase SQL Editor, run [`supabase.sql`](supabase.sql) to create the progress table and row-level security policies.
+3. In `supabase-auth.js`, set `SUPABASE_URL` and `SUPABASE_KEY` to your project URL and **publishable** key.
+4. Enable email sign-in in Supabase Auth. Configure the site URL and allowed redirect URLs for your deployed site (and `http://localhost:8000` for local testing).
+5. Deploy the site and test account creation, sign-in, sign-out, and progress syncing.
+
+The publishable key is intended for browser use; database access is restricted by the row-level security policies. Never put a Supabase `service_role` or other secret key in this repository or in browser code.
+
+## Deploy with GitHub Pages
+
+The live site is served from the repository’s `main` branch. To publish changes, push or merge them to `main`, then check the repository’s **Settings → Pages** to confirm the Pages source is configured for the branch and root folder. GitHub Pages publishes the static files; no build command is needed.
+
+## Project files
+
+- `index.html` — page structure and content
+- `style.css`, `liquid-navigation.css`, `achievements.css`, `ambient-background.css` — visual styles
+- `script.js` — practice flow, navigation, profiles, and progress UI
+- `questions.json` — exercise bank
+- `quotes.json` — daily quote collection
+- `achievements.js` — achievement tracking and display
+- `supabase-auth.js` — Supabase authentication and cloud progress sync
+- `supabase.sql` — progress table and row-level security policies
