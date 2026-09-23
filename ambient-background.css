@@ -1,5 +1,9 @@
 body{position:relative;isolation:isolate;--pointer-x:50vw;--pointer-y:35vh}
-body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:radial-gradient(420px circle at var(--pointer-x) var(--pointer-y),#36bd821c,transparent 74%);transition:opacity .3s ease}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:radial-gradient(500px circle at var(--pointer-x) var(--pointer-y),#36bd822e,transparent 74%);transition:opacity .3s ease}
 body.pointer-active:before{opacity:1}
-body.dark:before{background:radial-gradient(420px circle at var(--pointer-x) var(--pointer-y),#47c99820,transparent 74%)}
+body.dark:before{background:radial-gradient(500px circle at var(--pointer-x) var(--pointer-y),#47c99830,transparent 74%)}
+.ambient-particles{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.ambient-particles.active{opacity:1}
+.ambient-particle{position:absolute;left:-20px;top:-20px;width:var(--size);height:var(--size);border-radius:50%;background:#63d99d;opacity:var(--particle-opacity);box-shadow:0 0 10px #36bd82b3,0 0 22px #36bd8259;transition:left .32s cubic-bezier(.2,.7,.3,1),top .32s cubic-bezier(.2,.7,.3,1)}
+.dark .ambient-particle{background:#a1ffd2;box-shadow:0 0 12px #5ce3adcc,0 0 24px #36bd8266}
 @media(prefers-reduced-motion:reduce){body:before{display:none}}
