@@ -16,8 +16,3 @@ function renderSkillProgress(){
   });
 }
 const skillProgressRender=render;render=()=>{skillProgressRender();renderSkillProgress()};render();
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#check-answer')||P.checked||!P.queue?.length)return;
-  const q=P.queue[P.i%P.queue.length];if(P.selected!==q.a)return;
-  st.correctBySkill={...D.correctBySkill,...st.correctBySkill};st.correctBySkill[P.skill]=(st.correctBySkill[P.skill]||0)+1;
-},true);
