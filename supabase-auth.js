@@ -6,7 +6,7 @@ window.lpCloud=cloud;
 async function loadCloudUser(user){
   window.__lpCloudUser=user;
   const {data}=await cloud.from('student_progress').select('state').eq('user_id',user.id).maybeSingle();
-  if(data?.state){st={...D,...data.state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0)}
+  if(data?.state){st={...D,...data.state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0);if(st.dayKey!==todayKey()){st.today=0;st.dayKey=todayKey()}}
   session=user.id;localStorage.setItem(SESSION_KEY,session);authScreen.classList.add('hidden');document.body.classList.add('authenticated');render();
 }
 
