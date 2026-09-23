@@ -1,0 +1,9 @@
+.bottom-nav{background:#f8fffbba;border:1px solid #ffffffd1;backdrop-filter:blur(24px) saturate(155%);-webkit-backdrop-filter:blur(24px) saturate(155%);box-shadow:0 14px 38px #10291f2b,inset 0 1px #ffffff;border-radius:24px;padding:8px;gap:5px}
+.nav-item{min-width:72px;padding:8px 14px;border-radius:17px;transition:background-color .2s ease,color .2s ease,transform .2s ease}
+.nav-item:hover{background:#ffffff78;transform:translateY(-1px)}
+.nav-item.active{background:#ffffffc7;color:#267355;box-shadow:0 3px 12px #244f391a,inset 0 1px #fff}
+.dark .bottom-nav{background:#172521c9;border-color:#ffffff25;box-shadow:0 14px 38px #0006,inset 0 1px #ffffff1c}
+.dark .nav-item:hover{background:#ffffff12}
+.dark .nav-item.active{background:#ffffff1c;color:#d9f5e2;box-shadow:inset 0 1px #ffffff22}
+@media(max-width:760px){.bottom-nav{bottom:max(12px,env(safe-area-inset-bottom));width:calc(100% - 30px);padding:7px;gap:2px}.nav-item{min-width:0;flex:1;padding:7px 4px}}
+@media(prefers-reduced-transparency:reduce){.bottom-nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface)}}
