@@ -1,7 +1,6 @@
 // Small, progressive enhancements layered over the existing practice flow.
 let writingSaveTimer;
 const originalPracticeDraw = draw;
-const originalPracticeSave = savePracticeSession;
 const originalDashboardRender = render;
 const originalPracticeOpen = openPractice;
 const originalShowSpeakingOptions = showSpeakingOptions;
