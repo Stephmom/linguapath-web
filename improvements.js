@@ -27,7 +27,12 @@ openPractice = (skill, resume = null) => {
   savePracticeSession(true);
 };
 showSpeakingOptions = message => {
+  if (message.startsWith('Recording is not available')) message = 'Recording is unavailable here. Say the model answer aloud and compare the sounds and stress.';
   originalShowSpeakingOptions(message);
+  if (speakingUrl) {
+    document.querySelector('#start-speaking').style.display = '';
+    document.querySelector('#start-speaking').textContent = 'Record again';
+  }
   savePracticeSession(true);
 };
 
@@ -47,10 +52,42 @@ draw = () => {
   const writingInput = document.querySelector('#writing-response');
   const compare = document.querySelector('#show-writing-samples');
   const answers = document.querySelector('#answer-options');
+  const speakingPanel = document.querySelector('#speaking-practice');
+  const speakingUnlocked = speaking && P.checked && P.selected === P.queue[P.i % P.queue.length].a;
   writingPanel.style.display = writing ? 'block' : 'none';
   if (writingInput.value !== (P.draft || '')) writingInput.value = P.draft || '';
   compare.disabled = !(P.draft || '').trim();
-  answers.style.display = writing && !P.revealed && !P.checked || speaking && !P.spoken && !P.checked ? 'none' : '';
+  answers.style.display = writing && !P.revealed && !P.checked ? 'none' : '';
+  speakingPanel.style.display = speakingUnlocked ? 'block' : 'none';
+  speakingPanel.querySelector('p').textContent = 'Correct! Practice saying the model answer aloud, record yourself, then listen back and check your pronunciation.';
+  let model = document.querySelector('#speaking-model');
+  if (!model) {
+    model = document.createElement('p');
+    model.id = 'speaking-model';
+    model.className = 'speaking-model';
+    speakingPanel.insertBefore(model, speakingPanel.querySelector('ul'));
+  }
+  model.textContent = P.queue[P.i % P.queue.length].a;
+  const checks = speakingPanel.querySelectorAll('li');
+  ['Are the sounds clear?', 'Did I stress the important words?', 'Was my speech steady and easy to understand?'].forEach((text, i) => { checks[i].textContent = text; });
+  document.querySelector('#continue-speaking').style.display = 'none';
+  let playModel = document.querySelector('#play-speaking-model');
+  if (!playModel) {
+    playModel = document.createElement('button');
+    playModel.id = 'play-speaking-model';
+    playModel.type = 'button';
+    playModel.className = 'secondary';
+    playModel.textContent = '▶ Hear model answer';
+    document.querySelector('#start-speaking').before(playModel);
+    playModel.addEventListener('click', () => {
+      if (!window.speechSynthesis) { document.querySelector('#speaking-status').textContent = 'Audio playback is not available in this browser.'; return; }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(P.queue[P.i % P.queue.length].a);
+      utterance.rate = .9;
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+  document.querySelector('#start-speaking').textContent = speakingUrl ? 'Record again' : 'Start recording';
   if (P.checked) {
     const result = document.querySelector('#answer-result');
     result.textContent = `${P.selected === P.queue[P.i % P.queue.length].a ? 'Correct — great work!' : `Not quite. Correct answer: ${P.queue[P.i % P.queue.length].a}.`} ${explainAnswer(P.queue[P.i % P.queue.length])}`;
@@ -74,6 +111,7 @@ document.querySelector('#continue-speaking').addEventListener('click', () => {
   P.spoken = true;
   savePracticeSession(true);
 });
+document.querySelector('#start-speaking').addEventListener('click', () => window.speechSynthesis?.cancel(), true);
 document.querySelector('#close-practice').addEventListener('click', () => clearTimeout(writingSaveTimer));
 
 const checkButton = document.querySelector('#check-answer');
