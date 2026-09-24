@@ -9,11 +9,11 @@ function renderAchievements(){
   let unlocked=0;
   document.querySelector('.achievement-grid').innerHTML=achievements.map((achievement,index)=>{
     const goal=achievementGoals[index],current=goal.kind==='exercise'?answered:(Number(st.lessons)||0),complete=current>=goal.target;
-    const percent=Math.min(100,Math.round(current/goal.target*100));if(complete)unlocked++;
+    const progress=Math.min(current,goal.target),percent=Math.round(progress/goal.target*100);if(complete)unlocked++;
     const unit=goal.kind==='exercise'?'exercise':'lesson',label=goal.target+' '+unit+(goal.target===1?'':'s');
     const description=complete?'Unlocked':Math.max(0,goal.target-current)+' '+unit+(goal.target-current===1?'':'s')+' to go';
-    return '<article class="achievement '+(complete?'unlocked':'locked')+'" aria-label="'+achievement[1]+': '+(complete?'unlocked':current+' of '+goal.target+' '+unit+'s')+'"><span class="achievement-icon">'+achievement[0]+'</span><strong>'+achievement[1]+'</strong><small>'+description+'</small><span class="achievement-progress-meta"><span>'+current+' / '+label+'</span><b>'+percent+'%</b></span><span class="achievement-progress-track" role="progressbar" aria-label="'+achievement[1]+' progress" aria-valuemin="0" aria-valuemax="'+goal.target+'" aria-valuenow="'+Math.min(current,goal.target)+'"><span style="width:'+percent+'%"></span></span></article>';
+    return '<article class="achievement '+(complete?'unlocked':'locked')+'" aria-label="'+achievement[1]+': '+(complete?'unlocked':current+' of '+goal.target+' '+unit+'s')+'"><span class="achievement-icon">'+achievement[0]+'</span><strong>'+achievement[1]+'</strong><small>'+description+'</small><span class="achievement-progress-meta"><span>'+progress+' / '+label+'</span><b>'+percent+'%</b></span><span class="achievement-progress-track" role="progressbar" aria-label="'+achievement[1]+' progress" aria-valuemin="0" aria-valuemax="'+goal.target+'" aria-valuenow="'+progress+'"><span style="width:'+percent+'%"></span></span></article>';
   }).join('');
   document.querySelector('.achievement-head .pill').textContent=unlocked+' of '+achievements.length+' unlocked';
 }
-const achievementRender=render;render=()=>{achievementRender();renderAchievements()};render();
+const achievementRender=render;render=()=>{achievementRender();renderAchievements();document.querySelector('#today-date').textContent=new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric'}).format(new Date())};render();
