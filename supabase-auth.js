@@ -16,19 +16,34 @@ async function refreshCloudSession(){
   return true;
 }
 
+function restoreSavedProgress(local,cloud){
+  const localState=local?.state,cloudState=cloud?.state;
+  if(!localState||(Number(local.savedAt)||0)<=(Date.parse(cloud?.updated_at)||0))return {state:cloudState||localState,restoreLocal:false};
+  const state={...cloudState,...localState};
+  if(cloudState){
+    state.correctByTier=[0,1,2].map(i=>Math.max(Number(cloudState.correctByTier?.[i])||0,Number(localState.correctByTier?.[i])||0));
+    state.correct=state.correctByTier.reduce((sum,n)=>sum+n,0);
+    state.exercisesCompleted=Math.max(Number(cloudState.exercisesCompleted)||0,Number(localState.exercisesCompleted)||0);
+    state.lessons=Math.max(Number(cloudState.lessons)||0,Number(localState.lessons)||0);
+    if(cloudState.dayKey===localState.dayKey)state.today=Math.max(Number(cloudState.today)||0,Number(localState.today)||0);
+  }
+  return {state,restoreLocal:true};
+}
+
 async function loadCloudUser(user){
   if(!await refreshCloudSession()){
     cloudSession=null;window.__lpCloudUser=null;session=null;localStorage.removeItem(CLOUD_SESSION_KEY);localStorage.removeItem(SESSION_KEY);setAuthMode(true);
     document.querySelector('#auth-error').textContent='Your session expired. Please log in again; your saved progress is still in your account.';return;
   }
   let response;
-  try{response=await fetch(SUPABASE_URL+'/rest/v1/student_progress?select=state&user_id=eq.'+encodeURIComponent(user.id),{headers:authHeaders(cloudSession.access_token)})}
+  try{response=await fetch(SUPABASE_URL+'/rest/v1/student_progress?select=state,updated_at&user_id=eq.'+encodeURIComponent(user.id),{headers:authHeaders(cloudSession.access_token)})}
   catch{document.querySelector('#auth-error').textContent='Could not connect to load saved progress. Check your connection and try again.';return}
   if(!response.ok){document.querySelector('#auth-error').textContent='Could not load saved progress. Check your connection and try again; your account data was not changed.';return}
   const rows=await response.json();
   window.__lpCloudUser=user;
-  if(rows[0]?.state){st={...D,...rows[0].state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0);if(st.dayKey!==todayKey()){st.today=0;st.dayKey=todayKey()}}else st={...D,dayKey:todayKey(),profile:{...D.profile,name:user.email?.split('@')[0]||'Learner'}};if(st.streak&&!st.lastStreakAt)st.lastStreakAt=Date.now();
-  session=user.id;localStorage.setItem(SESSION_KEY,session);authScreen.classList.add('hidden');document.body.classList.add('authenticated');render();window.lpResumePractice?.();
+  const restored=restoreSavedProgress(users()[user.id],rows[0]);
+  if(restored.state){st={...D,...restored.state};st.profile={...D.profile,...st.profile};st.correctByTier=Array.isArray(st.correctByTier)?[...st.correctByTier]:[0,0,0];st.correct=st.correctByTier.reduce((a,b)=>a+b,0);if(st.dayKey!==todayKey()){st.today=0;st.dayKey=todayKey()}}else st={...D,dayKey:todayKey(),profile:{...D.profile,name:user.email?.split('@')[0]||'Learner'}};if(st.streak&&!st.lastStreakAt)st.lastStreakAt=Date.now();
+  session=user.id;localStorage.setItem(SESSION_KEY,session);authScreen.classList.add('hidden');document.body.classList.add('authenticated');render();if(restored.restoreLocal)window.lpCloudPending=window.lpSaveProgress(st);window.lpResumePractice?.();
 }
 
 let cloudSaveQueue=Promise.resolve();
