@@ -52,7 +52,7 @@ window.lpSaveProgress=state=>{
   const snapshot=JSON.parse(JSON.stringify(state));
   cloudSaveQueue=cloudSaveQueue.then(async()=>{
     if(!await refreshCloudSession())throw new Error('Your session expired. Log in again to sync progress.');
-    const response=await fetch(SUPABASE_URL+'/rest/v1/student_progress?on_conflict=user_id',{method:'POST',keepalive:true,headers:{...authHeaders(cloudSession.access_token),Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:window.__lpCloudUser.id,state:snapshot,updated_at:new Date().toISOString()})});
+    const response=await fetch(SUPABASE_URL+'/rest/v1/student_progress?on_conflict=user_id',{method:'POST',keepalive:true,headers:{...authHeaders(cloudSession.access_token),Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:window.__lpCloudUser.id,state:snapshot,updated_at:new Date(snapshot._savedAt||Date.now()).toISOString()})});
     if(!response.ok)throw new Error('Supabase returned '+response.status);
     return true;
   }).catch(error=>{console.error('Progress sync failed:',error);note('Progress could not sync. Check your connection and log in again if needed.');return false});
